@@ -35,14 +35,17 @@ def articles_links_more(author):
                 yield(link.get('href'))
 
 
-links_6 = []
+def articles_of_author(author):
+    links = []
+    for i in articles_links(author):
+        if i not in links:
+            links.append(i)
+    for i in articles_links_more(author):
+        if i not in links:
+            links.append(i)
+    return links
 
-for i in articles_links('6'):
-    if i not in links_6:
-        links_6.append(i)
-for i in articles_links_more('6'):
-    if i not in links_6:
-        links_6.append(i)
+print(articles_of_author('2523'))
 
-print(len(links_6), links_6)
+
 
