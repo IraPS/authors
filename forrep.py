@@ -73,4 +73,4 @@ def save_texts(author):
 
 
 # Пример работы: просто пишем save_texts и id автора
-# save_texts('2523')
+#save_texts('2523')
