@@ -60,3 +60,17 @@ def articles_texts(author):
         soup = BeautifulSoup(page, 'html.parser')
         yield(soup.find('div', {'class': 'block-content'}).getText())
 
+
+def save_texts(author):
+    '''Функция сохраняет в файлы тексты авторов'''
+    number = 1
+    for i in articles_texts(author):
+        file = open('./articles/' + author + '_' + str(number) + '.txt', 'w', encoding='utf-8')
+        file.write(i)
+        file.close()
+        number += 1
+
+
+
+# Пример работы: просто пишем save_texts и id автора
+# save_texts('2523')
