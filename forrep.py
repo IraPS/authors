@@ -41,7 +41,6 @@ def articles_links_more(author):
                 yield(link.get('href'))
 
 
-
 def articles_of_author(author):
     '''Функция возвращает массив со список ссылок на рецензии автора'''
     links = []
@@ -54,6 +53,10 @@ def articles_of_author(author):
     return links
 
 
-print(len(articles_of_author('2523')), articles_of_author('2523'))
-
+def articles_texts(author):
+    '''Функция возвращает тексты всех рецензий автора'''
+    for articleLink in articles_of_author(author):
+        page = url_open('http://www.rollingstone.ru'+articleLink)
+        soup = BeautifulSoup(page, 'html.parser')
+        yield(soup.find('div', {'class': 'block-content'}).getText())
 
