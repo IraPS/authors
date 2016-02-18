@@ -1,11 +1,9 @@
 #  -*- coding: utf-8 -*-
 
-import re
-import os
-import bz2
 import urllib.request as urlr
-import xml.dom.minidom as xdm
+import re
 
-
-,jn,
-,hv,vars()
+urlAdress = 'http://www.rollingstone.ru/authors/2523/'
+html = urlr.urlopen(urlAdress)
+html = html.read().decode('utf-8')
+print(type(html))
