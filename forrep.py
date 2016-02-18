@@ -71,6 +71,5 @@ def save_texts(author):
         number += 1
 
 
-
 # Пример работы: просто пишем save_texts и id автора
 #save_texts('2523')
