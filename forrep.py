@@ -45,14 +45,13 @@ def articles_of_author(author):
 
 
 def articles_texts(author):
-    '''Функция возвращает тексты всех рецензий автора , если их меньше 100 (?)'''
-    if articles_of_author(author)[0] <= 100 and articles_of_author(author)[0] > 50:
-        new_dir = './articles/' + author
-        os.makedirs(os.path.join(new_dir))
-        for articleLink in articles_of_author(author)[1]:
-            page = url_open('http://www.rollingstone.ru' + articleLink)
-            soup = BeautifulSoup(page, 'html.parser')
-            yield(soup.find('div', {'class': 'block-content'}).getText())
+    '''Функция возвращает тексты всех рецензий автора'''
+    new_dir = './articles/' + author
+    os.makedirs(os.path.join(new_dir))
+    for articleLink in articles_of_author(author)[1]:
+        page = url_open('http://www.rollingstone.ru' + articleLink)
+        soup = BeautifulSoup(page, 'html.parser')
+        yield(soup.find('div', {'class': 'block-content'}).getText())
 
 
 def save_texts(author):
@@ -69,7 +68,7 @@ def authors():
     '''Функция ищет id авторов рецензий'''
     authors = []
     articles_to_get_authors = []
-    for n in range(1, 101):
+    for n in range(1, 122):
         magazine = 'http://www.rollingstone.ru/music/review/page/' + str(n)
         magazine = url_open(magazine)
         soup = BeautifulSoup(magazine, 'html.parser')
