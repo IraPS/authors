@@ -69,7 +69,7 @@ def authors():
     '''Функция ищет id авторов рецензий'''
     authors = []
     articles_to_get_authors = []
-    for n in range(1, 11):
+    for n in range(1, 101):
         magazine = 'http://www.rollingstone.ru/music/review/page/' + str(n)
         magazine = url_open(magazine)
         soup = BeautifulSoup(magazine, 'html.parser')
@@ -78,17 +78,22 @@ def authors():
                 if link.get('href') not in articles_to_get_authors:
                     articles_to_get_authors.append(link.get('href'))
     for articleLink in articles_to_get_authors:
+        #print('http://www.rollingstone.ru' + articleLink)
         article = url_open('http://www.rollingstone.ru' + articleLink)
         soup = BeautifulSoup(article, 'html.parser')
         span = soup.find('span', {'class': 'black-bold'})
-        author = re.search('<a href="/authors/(.*?)/">', str(span)).group(1)
-        if author not in authors:
-            authors.append(author)
+        a1 = re.search('<a href="/authors/(.*?)/">', str(span))
+        if a1 is not None:
+            author = re.search('<a href="/authors/(.*?)/">', str(span)).group(1)
+            if author not in authors:
+                authors.append(author)
+    print(authors)
     return authors
 
+print(authors())
 
-for id in authors():
-    save_texts(id)
+#for id in authors():
+#    save_texts(id)
 
 
 
