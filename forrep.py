@@ -20,7 +20,9 @@ def count_pages(author):
     '''Функция считает количество страниц для перелистывания списка рецензий автора'''
     page = url_open('http://www.rollingstone.ru/authors/' + author)
     c = re.findall('<li><a href="/authors/' + author + '/page/.*?/">(.*?)</a>', page)
-    return int(c[-1])
+    #print(author)
+    #print(c)
+    return len(c)+1
 
 
 def articles_links_more(author):
@@ -67,7 +69,7 @@ def authors():
     '''Функция ищет id авторов рецензий'''
     authors = []
     articles_to_get_authors = []
-    for n in range(1, 3):
+    for n in range(1, 11):
         magazine = 'http://www.rollingstone.ru/music/review/page/' + str(n)
         magazine = url_open(magazine)
         soup = BeautifulSoup(magazine, 'html.parser')
