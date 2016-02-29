@@ -86,13 +86,13 @@ def authors():
             author = re.search('<a href="/authors/(.*?)/">', str(span)).group(1)
             if author not in authors:
                 authors.append(author)
-    print(authors)
+    #print(authors)
     return authors
 
-print(authors())
 
-#for id in authors():
-#    save_texts(id)
+
+for id in authors():
+    save_texts(id)
 
 
 
