@@ -12,3 +12,6 @@ for root, dirs, files in os.walk('./articles1'):
                 for u in i:
                     f.write(u)
             f.close()
+
+
+
