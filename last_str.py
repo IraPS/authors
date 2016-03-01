@@ -1,5 +1,6 @@
 import os
 
+
 for root, dirs, files in os.walk('./articles1'):
     for file in files:
         if file.endswith('.txt'):
