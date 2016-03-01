@@ -1,5 +1,7 @@
 __author__ = 'akutinanatasha'
 
+# пробуем гит у Наташ в пайчарм
+
 import os,re,math
 lemmas1 = set()
 idf1 = {}
