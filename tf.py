@@ -3,7 +3,8 @@ __author__ = 'akutinanatasha'
 import os,re,math
 corpus1 = []
 mass = {} #делить на кол-во слов в документе
-
+data = []
+target = []
 
 """
 def lemmas(file):
@@ -81,7 +82,8 @@ def tfidf(i, col):
 
 ids = ['1830_36', '141_70', '103_95', '2510_49', '2523_63', '53_50', '557_71', '6_100', '763_54']
 for x in ids:
-    outfile = open('./' + x + '.csv', 'w')
+    id1 = int(x.split('_')[0])
+    print(x)
     for root, dirs, files in os.walk('./' + x):
         for file in files:
             if file.startswith('lemma'):
@@ -95,35 +97,34 @@ for x in ids:
                         else:
                             s = mass[i] + 1
                             mass[i] = s
-                    for p in a_texts: ###
+                    for p in a_texts:
                         cor = []
                         n = re.findall('(?<=analysis"\:\[\{"lex"\:")[а-я]+', p)
                         infile = open('./1.csv', 'r')
                         for j in infile:
                             j = j.strip()
                             j = j.split(';')
-                            for k in n:
-                                if k == j[0]:
-                                    cor.append(tfidf(k, len(k2)))
-                                else:
-                                    cor.append(0)
+                            if j[0] in n:
+                                cor.append(tfidf(j[0], len(k2)))
+                            else:
+                                cor.append(0)
                         b = [pril(p), nar(p), chispril(p), mestpril(p), chkomp(p), sojuz(p), intj(p), num(p),
                              part(p), predl(p), sush(p), glag(p), mestsush(p)]
                         for i in b:
                             cor.append(i)
                         corpus1.append(cor)
-                        for i in cor:
-                            i = str(i)
-                            outfile.write(i + ', ')
-                        outfile.write('\n')
-                #print(p)
-            #print(mass)
+                        print(len(cor))
+                        data.append(cor)
+                        target.append(id1)
+                        cor = []
             mass = {}
 
 #print(k)
 #print(corpus1)
+print(len(data))
+print(len(target))
 
-outfile.close()
+
 
 
 
