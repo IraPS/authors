@@ -88,16 +88,10 @@ def authors():
                 authors.append(author)
     #print(authors)
     return authors
-
-
+    
 
 for id in authors():
     save_texts(id)
-
-
-
-
-
 
 
 # Пример работы: просто пишем save_texts и id автора
