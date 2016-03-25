@@ -1,46 +1,45 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import svm
-from scipy import sparse
 from sklearn.metrics import roc_curve, auc
 
-train1830 = np.load('author1830_36-2.npz')
-train1830 = train1830['arr_0']
-test1830 = np.load('test1830.npz')
-test1830 = test1830['arr_0']
+train = np.load('train.npz')
+train = train['arr_0']
+test = np.load('test.npz')
+test = test['arr_0']
 
-train6 = np.load('author2523_63_final.npz')
-train6 = train6['arr_0']
-test6 = np.load('test_author557_final.npz')
-test6 = test6['arr_0']
-
-test103 = np.load('test103.npz')
-test103 = test103['arr_0']
+dc = np.load('both.npz')
+dc = dc['arr_0']
 
 clf = svm.OneClassSVM(nu=0.05)
-clf.fit(train6)
+clf.fit(train)
 
-predict = clf.predict(test6)
-a = 0
-print(predict)
-for i in predict:
-    if i == -1:
-        a += 1
-print((len(predict)-a)/len(predict))
+results = np.array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., -1.,  -1.,  -1.,  -1., -1.,  -1.]).T
 
-decfunc = clf.decision_function(test1830)
-#print(decfunc)
+# predict = clf.predict(dc) # порог выставляется автоматически
 
-results = np.array([[float(1)]*len(test1830)]).T
-#print(results)
+decfunc = clf.decision_function(dc)
+print(list(zip(sorted(decfunc),sorted(results))))
+
+# порог вставляется вручную, на основе результатов decision function
+predict = []
+for i in decfunc:
+    if i < -0.02:
+        predict.append(-1.)
+    else:
+        predict.append(1.)
+
+print('accuracy of predict', (predict == results).mean())
 
 fpr, tpr, _ = roc_curve(results, decfunc)
-#print(fpr, tpr)
 roc_auc = auc(fpr, tpr)
 plt.figure()
 plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+plt.plot([0, 1], [0, 1], 'k--')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver operating characteristic')
 plt.legend(loc="lower right")
-#plt.show()
+plt.show()
